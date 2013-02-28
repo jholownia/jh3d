@@ -617,7 +617,7 @@ void Matrix::CreatePerspective( float flength )
 
 	data_[12] = 0.0f;
 	data_[13] = 0.0f;
-	data_[14] = 0.0f;
+    data_[14] = 0.0f;
     data_[15] = 0.0f;
 }
 

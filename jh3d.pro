@@ -16,12 +16,18 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     matrix.cpp \
     quad.cpp \
-    renderarea.cpp
+    renderarea.cpp \
+    triangle.cpp \
+    model.cpp
 
 HEADERS  += mainwindow.h \
     point.h \
     matrix.h \
     quad.h \
-    renderarea.h
+    renderarea.h \
+    triangle.h \
+    model.h \
+    vector3d.h \
+    vertex.h
 
 FORMS    += mainwindow.ui

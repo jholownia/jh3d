@@ -1,6 +1,6 @@
 /*
 ================================
- mainwindow.h
+ renderarea.h
 
  Created on: 20 Feb 2013
  Author: Jan Holownia
@@ -15,6 +15,9 @@
 #include <QPainter>
 
 #include <iostream>
+
+#include "model.h"
+#include "triangle.h"
 
 RenderArea::RenderArea(QWidget *parent) :
     QWidget(parent)
@@ -55,12 +58,12 @@ void RenderArea::setAntialiased(bool aa)
 }
 
 void RenderArea::paintEvent(QPaintEvent* event)
-{
-    std::cout << "Painting" << std::endl;
-
+{    
+    std::cout << "paintEvent" << std::endl;
 
     using namespace jh;
 
+    /*
     Quad q1(Point(0, 0, 0), Point(0, 1, 0), Point(1, 1, 0), Point(1, 0, 0));
     Quad q2(Point(0, 0, 1), Point(0, 1, 1), Point(1, 1, 1), Point(1, 0, 1));
     Quad q3(Point(0, 0, 1), Point(0, 1, 1), Point(1, 1, 1), Point(1, 0, 1));
@@ -69,14 +72,7 @@ void RenderArea::paintEvent(QPaintEvent* event)
     Quad q6(Point(1, 0, 0), Point(1, 1, 0), Point(1, 1, 1), Point(1, 0, 1));
 
     Quad cube[6] = {q1, q2, q3, q4, q5, q6};
-
-    // static const QPoint points[4] =
-    // {
-//        QPoint(10, 80),
- //        QPoint(20, 10),
- //        QPoint(80, 30),
- //       QPoint(90, 70)
-//    };
+    */
 
     QPainter painter(this);
     painter.setPen(pen_);
@@ -87,31 +83,44 @@ void RenderArea::paintEvent(QPaintEvent* event)
         painter.setRenderHint(QPainter::Antialiasing, true);
     }
 
+    Model model;
+    if (!model.init("C:/Users/root/Documents/Qt/jh3d/Cube.txt"))
+        return;
+
+    Triangle* mesh = model.getMesh();
+
     Matrix perspectiveMatrix, translationMatrix, scaleMatrix;
 
-    perspectiveMatrix.CreatePerspective(3.0f);
-    translationMatrix.CreateTranslattion(20, 10, 10);
-    scaleMatrix.CreateScale(150.0f, 150.0f, 150.0f);
+    perspectiveMatrix.CreatePerspective(400.0f);
+    translationMatrix.CreateTranslattion(50, 50, 400);
+    scaleMatrix.CreateScale(1.0f, 1.0f, 1.0f);
 
-    static QPoint points[4];
+    Matrix worldMatrix = scaleMatrix * translationMatrix;
 
-    for (int i = 0; i < 6; ++i)
-    {
-        cube[i].transform(scaleMatrix);
+
+    for (int i = 0; i < model.getIndexCount(); ++i)
+    {        
+        // mesh[i].transform(scaleMatrix);
+        // mesh[i].transform(translationMatrix);
+        mesh[i].transform(perspectiveMatrix);
+
+        // cube[i].transform(worldMatrix);
+        // cube[i].transform(scaleMatrix);
         // cube[i].transform(translationMatrix);
-        cube[i].transform(perspectiveMatrix);
+        // cube[i].transform(perspectiveMatrix);
 
     }
 
+    static QPoint points[3];
 
     for (int i = 0; i < 6; ++i)
     {
-        for (int j = 0; j < 4; ++j)
+        for (int j = 0; j < 3; ++j)
         {
-            points[j] = cube[i].getPoint(j).toQPoint();
-            std::cout << "Quad[" << i << "], " << "Point[" << j << "]:" << cube[i].getPoint(j).x() << ", " << cube[i].getPoint(j).y() << ", " << cube[i].getPoint(j).z() << std::endl;
+            points[j] = mesh[i].getPoint(j).toQPoint();
+            // std::cout << "Quad[" << i << "], " << "Point[" << j << "]:" << cube[i].getPoint(j).x() << ", " << cube[i].getPoint(j).y() << ", " << cube[i].getPoint(j).z() << std::endl;
         }
 
-        painter.drawPolygon(points, 4);
+        painter.drawPolygon(points, 3);
     }
 }
