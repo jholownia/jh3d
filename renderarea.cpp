@@ -84,7 +84,7 @@ void RenderArea::paintEvent(QPaintEvent* event)
     }
 
     Model model;
-    if (!model.init("C:/Users/root/Documents/Qt/jh3d/Cube.txt"))
+    if (!model.init("C:/Users/root/Documents/Qt/jh3d/Cube2.txt"))
         return;
 
     Triangle* mesh = model.getMesh();
@@ -93,15 +93,15 @@ void RenderArea::paintEvent(QPaintEvent* event)
 
     perspectiveMatrix.CreatePerspective(400.0f);
     translationMatrix.CreateTranslattion(50, 50, 400);
-    scaleMatrix.CreateScale(1.0f, 1.0f, 1.0f);
+    scaleMatrix.CreateScale(100.0f, 100.0f, 100.0f);
 
     Matrix worldMatrix = scaleMatrix * translationMatrix;
 
 
     for (int i = 0; i < model.getIndexCount(); ++i)
     {        
-        // mesh[i].transform(scaleMatrix);
-        // mesh[i].transform(translationMatrix);
+        mesh[i].transform(scaleMatrix);
+        mesh[i].transform(translationMatrix);
         mesh[i].transform(perspectiveMatrix);
 
         // cube[i].transform(worldMatrix);
@@ -113,14 +113,14 @@ void RenderArea::paintEvent(QPaintEvent* event)
 
     static QPoint points[3];
 
-    for (int i = 0; i < 6; ++i)
+    for (int i = 0; i < model.getIndexCount(); ++i)
     {
         for (int j = 0; j < 3; ++j)
         {
             points[j] = mesh[i].getPoint(j).toQPoint();
-            // std::cout << "Quad[" << i << "], " << "Point[" << j << "]:" << cube[i].getPoint(j).x() << ", " << cube[i].getPoint(j).y() << ", " << cube[i].getPoint(j).z() << std::endl;
+            std::cout << "Tri[" << i << "], " << "Point[" << j << "]:" << mesh[i].getPoint(j).x() << ", " << mesh[i].getPoint(j).y() << ", " << mesh[i].getPoint(j).z() << std::endl;
         }
 
-        painter.drawPolygon(points, 3);
+        painter.drawPolygon(points, 4);
     }
 }
