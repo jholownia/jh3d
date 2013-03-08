@@ -1,4 +1,4 @@
 jh3d
 ====
 
-3D graphics basics
+Simple 3D engine
