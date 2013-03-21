@@ -16,6 +16,10 @@
 
 // #include <QtWidgets>
 
+// TODO: rotation, controls and file dialog, depth buffer
+// THEN: pipeline class with stages: pixel, geometry, raster...
+// THEN: opengl
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Qt::PenCapStyle cap = Qt::FlatCap;
     renderArea_->setPen(QPen(Qt::blue));
 
-    Qt::BrushStyle brush = Qt::NoBrush; // Qt::SolidPattern;
+    Qt::BrushStyle brush = Qt::SolidPattern;
     renderArea_->setBrush(QBrush(brush));
 
     bool aa = true;
