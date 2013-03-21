@@ -14,7 +14,7 @@
 #include "renderarea.h"
 // #include "point.h"
 
-#include <QtWidgets>
+// #include <QtWidgets>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Qt::PenCapStyle cap = Qt::FlatCap;
     renderArea_->setPen(QPen(Qt::blue));
 
-    Qt::BrushStyle brush = Qt::SolidPattern;
+    Qt::BrushStyle brush = Qt::NoBrush; // Qt::SolidPattern;
     renderArea_->setBrush(QBrush(brush));
 
     bool aa = true;

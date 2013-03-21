@@ -63,16 +63,32 @@ void RenderArea::paintEvent(QPaintEvent* event)
 
     using namespace jh;
 
-    /*
-    Quad q1(Point(0, 0, 0), Point(0, 1, 0), Point(1, 1, 0), Point(1, 0, 0));
-    Quad q2(Point(0, 0, 1), Point(0, 1, 1), Point(1, 1, 1), Point(1, 0, 1));
-    Quad q3(Point(0, 0, 1), Point(0, 1, 1), Point(1, 1, 1), Point(1, 0, 1));
-    Quad q4(Point(0, 0, 0), Point(1, 0, 0), Point(1, 0, 1), Point(0, 0, 1));
-    Quad q5(Point(0, 0, 0), Point(0, 1, 0), Point(0, 1, 1), Point(0, 0, 1));
-    Quad q6(Point(1, 0, 0), Point(1, 1, 0), Point(1, 1, 1), Point(1, 0, 1));
 
-    Quad cube[6] = {q1, q2, q3, q4, q5, q6};
-    */
+//    Quad q1(Point(0, 0, 0), Point(0, 1, 0), Point(1, 1, 0), Point(1, 0, 0));
+//    Quad q2(Point(0, 0, 1), Point(0, 1, 1), Point(1, 1, 1), Point(1, 0, 1));
+//    Quad q3(Point(0, 0, 1), Point(0, 1, 1), Point(1, 1, 1), Point(1, 0, 1));
+//    Quad q4(Point(0, 0, 0), Point(1, 0, 0), Point(1, 0, 1), Point(0, 0, 1));
+//    Quad q5(Point(0, 0, 0), Point(0, 1, 0), Point(0, 1, 1), Point(0, 0, 1));
+//    Quad q6(Point(1, 0, 0), Point(1, 1, 0), Point(1, 1, 1), Point(1, 0, 1));
+
+//    Quad cube[6] = {q1, q2, q3, q4, q5, q6};
+
+
+    Triangle t1(Point(1, 1, -1), Point(-1, 1, -1), Point(-1,1,1));
+    Triangle t2(Point(1, 1, -1), Point(-1, 1, 1), Point(1,1,1));
+    Triangle t3(Point(1, 1, -1), Point(1, -1, -1), Point(-1,-1,-1));
+    Triangle t4(Point(1, 1, -1), Point(-1, -1, -1), Point(-1,1,-1));
+    Triangle t5(Point(-1, 1, -1), Point(-1, -1, -1), Point(-1,-1,1));
+    Triangle t6(Point(-1, 1, -1), Point(-1, -1, 1), Point(-1,1,1));
+    Triangle t7(Point(-1, 1, 1), Point(-1, -1, 1), Point(1,-1,1));
+    Triangle t8(Point(-1, 1, 1), Point(1, -1, 1), Point(1,1,1));
+    Triangle t9(Point(1, 1, 1), Point(1, -1, 1), Point(1,-1,-1));
+    Triangle t10(Point(1, 1, 1), Point(1, -1, -1), Point(1,1,-1));
+    Triangle t11(Point(1, -1, -1), Point(1, -1, 1), Point(-1,-1,1));
+    Triangle t12(Point(1, -1, -1), Point(-1, -1, 1), Point(-1,-1,-1));
+
+    Triangle cube[12] = {t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12};
+
 
     QPainter painter(this);
     painter.setPen(pen_);
@@ -83,44 +99,45 @@ void RenderArea::paintEvent(QPaintEvent* event)
         painter.setRenderHint(QPainter::Antialiasing, true);
     }
 
-    Model model;
-    if (!model.init("C:/Users/root/Documents/Qt/jh3d/Cube2.txt"))
-        return;
+    // Model model;
+    // if (!model.init("C:/Users/root/Documents/Qt/jh3d/Cube2.txt"))
+    //    return;
 
-    Triangle* mesh = model.getMesh();
+    // Triangle* mesh = model.getMesh();
 
     Matrix perspectiveMatrix, translationMatrix, scaleMatrix;
 
     perspectiveMatrix.CreatePerspective(400.0f);
-    translationMatrix.CreateTranslattion(50, 50, 400);
+    translationMatrix.CreateTranslattion(150, 150, 400);
     scaleMatrix.CreateScale(100.0f, 100.0f, 100.0f);
 
     Matrix worldMatrix = scaleMatrix * translationMatrix;
 
 
-    for (int i = 0; i < model.getIndexCount(); ++i)
+    for (int i = 0; i < 12; ++i)
     {        
-        mesh[i].transform(scaleMatrix);
-        mesh[i].transform(translationMatrix);
-        mesh[i].transform(perspectiveMatrix);
+        // mesh[i].transform(scaleMatrix);
+        // mesh[i].transform(translationMatrix);
+        // mesh[i].transform(perspectiveMatrix);
 
         // cube[i].transform(worldMatrix);
-        // cube[i].transform(scaleMatrix);
-        // cube[i].transform(translationMatrix);
-        // cube[i].transform(perspectiveMatrix);
+        cube[i].transform(scaleMatrix);
+        cube[i].transform(translationMatrix);
+        cube[i].transform(perspectiveMatrix);
 
     }
 
-    static QPoint points[3];
+    static QPoint points[4];
 
-    for (int i = 0; i < model.getIndexCount(); ++i)
+    for (int i = 0; i < 12; ++i)    //model.getIndexCount(); ++i)
     {
         for (int j = 0; j < 3; ++j)
         {
-            points[j] = mesh[i].getPoint(j).toQPoint();
-            std::cout << "Tri[" << i << "], " << "Point[" << j << "]:" << mesh[i].getPoint(j).x() << ", " << mesh[i].getPoint(j).y() << ", " << mesh[i].getPoint(j).z() << std::endl;
+            points[j] = cube[i].getPoint(j).toQPoint();
+            std::cout << "Tri[" << i << "], " << "Point[" << j << "]:" << cube[i].getPoint(j).x() << ", " << cube[i].getPoint(j).y() << ", " << cube[i].getPoint(j).z() << std::endl;
+            // std::cout << "Quad[" << i << "], " << "Point[" << j << "]:" << cube[i].getPoint(j).x() << ", " << cube[i].getPoint(j).y() << ", " << cube[i].getPoint(j).z() << std::endl;
         }
 
-        painter.drawPolygon(points, 4);
+        painter.drawPolygon(points, 3);
     }
 }
