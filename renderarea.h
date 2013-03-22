@@ -17,6 +17,8 @@
 #include <QPen>
 #include <QBrush>
 
+#include "model.h"
+#include "viewparams.h"
 
 class RenderArea : public QWidget
 {
@@ -31,6 +33,9 @@ public slots:
     void setPen(QPen const& pen);
     void setBrush(QBrush const& brush);
     void setAntialiased(bool antialiased);
+    void setModel(jh::Model* model);
+    void updateView(ViewParams viewParams);
+    void setDepthSort(bool sort);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -39,7 +44,10 @@ private:
     QPen pen_;
     QBrush brush_;
     bool antialiased_;
-    QPixmap pixmap_;
+    QPixmap pixmap_;    
+    ViewParams viewParams_;
+    jh::Model* model_;
+    bool depthSort_;
 };
 
 #endif // RENDERAREA_H

@@ -43,4 +43,14 @@ Point Triangle::getPoint(int i)
     return data_[i];
 }
 
+float Triangle::getAverageZ()
+{
+    return (data_[0].z() + data_[1].z() + data_[2].z()) / 3.0f;
+}
+
+bool Triangle::operator <(Triangle rhs)
+{
+    return getAverageZ() < rhs.getAverageZ();
+}
+
 } // namespace jh

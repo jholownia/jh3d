@@ -28,7 +28,9 @@ public:
 
     Point getPoint(int i);
 
-    // draw()? Create polygon and inherit from it?
+    // Used for sorting
+    float getAverageZ();
+    bool operator <(Triangle rhs);
 
 private:
     Point data_[3];

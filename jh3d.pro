@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = jh3d
@@ -17,7 +17,9 @@ SOURCES += main.cpp\
     quad.cpp \
     renderarea.cpp \
     triangle.cpp \
-    model.cpp
+    model.cpp \
+    renderareagl.cpp \
+    cube.cpp
 
 HEADERS  += mainwindow.h \
     point.h \
@@ -27,6 +29,10 @@ HEADERS  += mainwindow.h \
     triangle.h \
     model.h \
     vector3d.h \
-    vertex.h
+    vertex.h \
+    jhmath.h \
+    viewparams.h \
+    renderareagl.h \
+    cube.h
 
 FORMS    += mainwindow.ui

@@ -73,12 +73,7 @@ public:
     float z() const { return data_[2]; }
 
     void transform(Matrix const& matrix)
-    {        
-        // data_[0] = data_[0] * matrix(0,0) + data_[1] * matrix(0,1) + data_[2] * matrix(0,2) + data_[3] * matrix(0,3);
-        // data_[1] = data_[0] * matrix(1,0) + data_[1] * matrix(1,1) + data_[2] * matrix(1,2) + data_[3] * matrix(1,3);
-        // data_[2] = data_[0] * matrix(2,0) + data_[1] * matrix(2,1) + data_[2] * matrix(2,2) + data_[3] * matrix(2,3);
-        // data_[3] = data_[0] * matrix(3,0) + data_[1] * matrix(3,1) + data_[2] * matrix(3,2) + data_[3] * matrix(3,3);
-
+    {
         data_[0] = data_[0] * matrix(0,0) + data_[1] * matrix(1,0) + data_[2] * matrix(2,0) + data_[3] * matrix(3,0);
         data_[1] = data_[0] * matrix(0,1) + data_[1] * matrix(1,1) + data_[2] * matrix(2,1) + data_[3] * matrix(3,1);
         data_[2] = data_[0] * matrix(0,2) + data_[1] * matrix(1,2) + data_[2] * matrix(2,2) + data_[3] * matrix(3,2);

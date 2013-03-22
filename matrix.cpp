@@ -182,7 +182,7 @@ Matrix& Matrix::operator*=( Matrix const& other )
     result(0,2) = data_[12] * other(0,2) + data_[13] * other(1,2) + data_[14] * other(2,2) + data_[15] * other(3,2);
     result(0,3) = data_[12] * other(0,3) + data_[13] * other(1,3) + data_[14] * other(2,3) + data_[15] * other(3,3);
 
-    return result;
+    return *this;
 }
 
 /*
@@ -202,7 +202,7 @@ Matrix& Matrix::operator*=( float value )
         }
     }
 
-    return result;
+    return *this;
 }
 
 /*
@@ -234,7 +234,7 @@ Matrix& Matrix::operator+=( Matrix const& other )
     result(3,2) = data_[14] + other(3,2);
     result(3,3) = data_[15] + other(3,3);
 
-    return result;
+    return *this;
 }
 
 /*
@@ -266,7 +266,7 @@ Matrix& Matrix::operator-=( Matrix const& other )
     result(3,2) = data_[14] - other(3,2);
     result(3,3) = data_[15] - other(3,3);
 
-    return result;
+    return *this;
 }
 
 /*
@@ -286,7 +286,7 @@ Matrix& Matrix::operator/=( float value )
         }
     }
 
-    return result;
+    return *this;
 }
 
 /*

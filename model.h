@@ -13,7 +13,8 @@
 #define MODEL_H
 
 #include <string>
-
+#include <QColor>
+#include <QVector3D>
 namespace jh
 {
 
@@ -22,6 +23,7 @@ typedef int Index[3];
 struct Vector3D;
 struct Vertex;
 class Triangle;
+struct Geometry;
 
 class Model
 {
@@ -31,11 +33,19 @@ public:
 
     bool init(std::string filename);
 
-    // void render(device); ?
-
     Triangle* getMesh();
+
     int getIndexCount() const;
 
+    void Render() const;
+
+    void setColor(QColor c);
+
+    void createGeometry();
+
+    void setSmooth(bool smooth);
+
+    void translate(QVector3D t);
 
 private:
     int vertexCount_;
@@ -43,13 +53,15 @@ private:
     Vertex* vertexBuffer_;
     Index* indexBuffer_;
     Triangle* mesh_;
+    Geometry* geometry_;
+    bool smooth_;
 
 
     bool loadModel(std::string filename);
     void createMesh();
 
-    void releaseBuffers();
 
+    void releaseBuffers();
 };
 
 } // namespace jh

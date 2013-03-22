@@ -67,6 +67,8 @@ public:
     void CreateScale( float x, float y, float z );
     void CreatePerspective( float f );
 
+    float* getData() const { return (float*)data_; }  //  FIXME!!!1
+
 private:
     float data_[16];
     
