@@ -37,9 +37,5 @@ Point Quad::getPoint(int i)
     return data_[i];
 }
 
-void Quad::draw()
-{
-
-}
 
 } // namespace jh

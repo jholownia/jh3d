@@ -23,6 +23,11 @@
 // Uncomment this if building with Qt 5
 // #include <QtWidgets>
 
+/*
+================
+ MainWindow::MainWindow
+================
+*/
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -30,26 +35,23 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Set up UI elements
     ui->actionLoad->setIcon(style()->standardIcon(QStyle::SP_DialogOpenButton));
     ui->actionLoad->setText("Open");
     ui->actionQuit->setIcon(style()->standardIcon(QStyle::SP_DialogCloseButton));
     ui->actionAbout->setIcon(style()->standardIcon(QStyle::SP_FileDialogInfoView));
+
     renderArea_ = ui->renderArea;
-
-    // int penWidth = 1;
-    // Qt::PenStyle style = Qt::SolidLine;
-    // Qt::PenCapStyle cap = Qt::FlatCap;
-    renderArea_->setPen(QPen(Qt::blue));
-
-    Qt::BrushStyle brush = Qt::NoBrush;
-    renderArea_->setBrush(QBrush(brush));
-
-    bool aa = true;
-    renderArea_->setAntialiased(aa);
-
     gl_ = ui->renderAreaGL;
 
     setWindowTitle(tr("JH3D"));
+
+    // Set up QPainter parameters
+    renderArea_->setPen(QPen(Qt::blue));
+    Qt::BrushStyle brush = Qt::NoBrush;
+    renderArea_->setBrush(QBrush(brush));
+    bool aa = true;
+    renderArea_->setAntialiased(aa);
 
     // Default view parameters
     viewParams_.focalLength = 400;
@@ -64,6 +66,11 @@ MainWindow::MainWindow(QWidget *parent) :
     viewParams_.rotationZ = 0;
 }
 
+/*
+================
+ MainWindow::~MainWindow
+================
+*/
 MainWindow::~MainWindow()
 {
     delete model_;

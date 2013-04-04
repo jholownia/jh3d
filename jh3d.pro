@@ -18,8 +18,7 @@ SOURCES += main.cpp\
     renderarea.cpp \
     triangle.cpp \
     model.cpp \
-    renderareagl.cpp \
-    cube.cpp
+    renderareagl.cpp
 
 HEADERS  += mainwindow.h \
     point.h \
@@ -32,7 +31,6 @@ HEADERS  += mainwindow.h \
     vertex.h \
     jhmath.h \
     viewparams.h \
-    renderareagl.h \
-    cube.h
+    renderareagl.h
 
 FORMS    += mainwindow.ui

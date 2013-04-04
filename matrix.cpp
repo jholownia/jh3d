@@ -1,6 +1,6 @@
 /*
 ================================
- Matrix.cpp
+ matrix.cpp
 
  Created on: 04 Feb 2013
  Author: Jan Holownia
@@ -105,6 +105,7 @@ float& Matrix::operator()( unsigned int row, unsigned int col )
     }
 
     return data_[4 * row + col];
+
 }
 
 /*
@@ -160,27 +161,25 @@ Matrix& Matrix::operator=( Matrix const& other )
 */
 Matrix& Matrix::operator*=( Matrix const& other )
 {
-    Matrix result;
+    this->data_[0] = data_[0] * other(0,0) + data_[1] * other(1,0) + data_[2] * other(2,0) + data_[3] * other(3,0);
+    this->data_[1] = data_[0] * other(0,1) + data_[1] * other(1,1) + data_[2] * other(2,1) + data_[3] * other(3,1);
+    this->data_[2] = data_[0] * other(0,2) + data_[1] * other(1,2) + data_[2] * other(2,2) + data_[3] * other(3,2);
+    this->data_[3] = data_[0] * other(0,3) + data_[1] * other(1,3) + data_[2] * other(2,3) + data_[3] * other(3,3);
 
-    result(0,0) = data_[0] * other(0,0) + data_[1] * other(1,0) + data_[2] * other(2,0) + data_[3] * other(3,0);
-    result(0,1) = data_[0] * other(0,1) + data_[1] * other(1,1) + data_[2] * other(2,1) + data_[3] * other(3,1);
-    result(0,2) = data_[0] * other(0,2) + data_[1] * other(1,2) + data_[2] * other(2,2) + data_[3] * other(3,2);
-    result(0,3) = data_[0] * other(0,3) + data_[1] * other(1,3) + data_[2] * other(2,3) + data_[3] * other(3,3);
+    this->data_[4] = data_[4] * other(0,0) + data_[5] * other(1,0) + data_[6] * other(2,0) + data_[7] * other(3,0);
+    this->data_[5] = data_[4] * other(0,1) + data_[5] * other(1,1) + data_[6] * other(2,1) + data_[7] * other(3,1);
+    this->data_[6] = data_[4] * other(0,2) + data_[5] * other(1,2) + data_[6] * other(2,2) + data_[7] * other(3,2);
+    this->data_[7] = data_[4] * other(0,3) + data_[5] * other(1,3) + data_[6] * other(2,3) + data_[7] * other(3,3);
 
-    result(0,0) = data_[4] * other(0,0) + data_[5] * other(1,0) + data_[6] * other(2,0) + data_[7] * other(3,0);
-    result(0,1) = data_[4] * other(0,1) + data_[5] * other(1,1) + data_[6] * other(2,1) + data_[7] * other(3,1);
-    result(0,2) = data_[4] * other(0,2) + data_[5] * other(1,2) + data_[6] * other(2,2) + data_[7] * other(3,2);
-    result(0,3) = data_[4] * other(0,3) + data_[5] * other(1,3) + data_[6] * other(2,3) + data_[7] * other(3,3);
+    this->data_[8] = data_[8] * other(0,0) + data_[9] * other(1,0) + data_[10] * other(2,0) + data_[11] * other(3,0);
+    this->data_[9] = data_[8] * other(0,1) + data_[9] * other(1,1) + data_[10] * other(2,1) + data_[11] * other(3,1);
+    this->data_[10] = data_[8] * other(0,2) + data_[9] * other(1,2) + data_[10] * other(2,2) + data_[11] * other(3,2);
+    this->data_[11] = data_[8] * other(0,3) + data_[9] * other(1,3) + data_[10] * other(2,3) + data_[11] * other(3,3);
 
-    result(0,0) = data_[8] * other(0,0) + data_[9] * other(1,0) + data_[10] * other(2,0) + data_[11] * other(3,0);
-    result(0,1) = data_[8] * other(0,1) + data_[9] * other(1,1) + data_[10] * other(2,1) + data_[11] * other(3,1);
-    result(0,2) = data_[8] * other(0,2) + data_[9] * other(1,2) + data_[10] * other(2,2) + data_[11] * other(3,2);
-    result(0,3) = data_[8] * other(0,3) + data_[9] * other(1,3) + data_[10] * other(2,3) + data_[11] * other(3,3);
-
-    result(0,0) = data_[12] * other(0,0) + data_[13] * other(1,0) + data_[14] * other(2,0) + data_[15] * other(3,0);
-    result(0,1) = data_[12] * other(0,1) + data_[13] * other(1,1) + data_[14] * other(2,1) + data_[15] * other(3,1);
-    result(0,2) = data_[12] * other(0,2) + data_[13] * other(1,2) + data_[14] * other(2,2) + data_[15] * other(3,2);
-    result(0,3) = data_[12] * other(0,3) + data_[13] * other(1,3) + data_[14] * other(2,3) + data_[15] * other(3,3);
+    this->data_[12] = data_[12] * other(0,0) + data_[13] * other(1,0) + data_[14] * other(2,0) + data_[15] * other(3,0);
+    this->data_[13] = data_[12] * other(0,1) + data_[13] * other(1,1) + data_[14] * other(2,1) + data_[15] * other(3,1);
+    this->data_[14] = data_[12] * other(0,2) + data_[13] * other(1,2) + data_[14] * other(2,2) + data_[15] * other(3,2);
+    this->data_[15] = data_[12] * other(0,3) + data_[13] * other(1,3) + data_[14] * other(2,3) + data_[15] * other(3,3);
 
     return *this;
 }
@@ -192,13 +191,11 @@ Matrix& Matrix::operator*=( Matrix const& other )
 */
 Matrix& Matrix::operator*=( float value )
 {
-    Matrix result;
-
     for (int row = 0; row < 4; ++row)
     {
         for (int col = 0; col < 4; ++col)
         {
-            result(row, col) = data_[4 * row + col] * value;
+            this->data_[4 * row + col] = data_[4 * row + col] * value;
         }
     }
 
@@ -211,28 +208,26 @@ Matrix& Matrix::operator*=( float value )
 ================
 */
 Matrix& Matrix::operator+=( Matrix const& other )
-{
-    Matrix result;
+{    
+    this->data_[0] = data_[0] + other(0,0);
+    this->data_[1] = data_[1] + other(0,1);
+    this->data_[2] = data_[2] + other(0,2);
+    this->data_[3] = data_[3] + other(0,3);
 
-    result(0,0) = data_[0] + other(0,0);
-    result(0,1) = data_[1] + other(0,1);
-    result(0,2) = data_[2] + other(0,2);
-    result(0,3) = data_[3] + other(0,3);
+    this->data_[4] = data_[4] + other(1,0);
+    this->data_[5] = data_[5] + other(1,1);
+    this->data_[6] = data_[6] + other(1,2);
+    this->data_[7] = data_[7] + other(1,3);
 
-    result(1,0) = data_[4] + other(1,0);
-    result(1,1) = data_[5] + other(1,1);
-    result(1,2) = data_[6] + other(1,2);
-    result(1,3) = data_[7] + other(1,3);
+    this->data_[8] = data_[8] + other(2,0);
+    this->data_[9] = data_[9] + other(2,1);
+    this->data_[10] = data_[10] + other(2,2);
+    this->data_[11] = data_[11] + other(2,3);
 
-    result(2,0) = data_[8] + other(2,0);
-    result(2,1) = data_[9] + other(2,1);
-    result(2,2) = data_[10] + other(2,2);
-    result(2,3) = data_[11] + other(2,3);
-
-    result(3,0) = data_[12] + other(3,0);
-    result(3,1) = data_[13] + other(3,1);
-    result(3,2) = data_[14] + other(3,2);
-    result(3,3) = data_[15] + other(3,3);
+    this->data_[12] = data_[12] + other(3,0);
+    this->data_[13] = data_[13] + other(3,1);
+    this->data_[14] = data_[14] + other(3,2);
+    this->data_[15] = data_[15] + other(3,3);
 
     return *this;
 }
@@ -244,27 +239,25 @@ Matrix& Matrix::operator+=( Matrix const& other )
 */
 Matrix& Matrix::operator-=( Matrix const& other )
 {
-    Matrix result;
+    this->data_[0] = data_[0] - other(0,0);
+    this->data_[1] = data_[1] - other(0,1);
+    this->data_[2] = data_[2] - other(0,2);
+    this->data_[3] = data_[3] - other(0,3);
 
-    result(0,0) = data_[0] - other(0,0);
-    result(0,1) = data_[1] - other(0,1);
-    result(0,2) = data_[2] - other(0,2);
-    result(0,3) = data_[3] - other(0,3);
+    this->data_[4] = data_[4] - other(1,0);
+    this->data_[5] = data_[5] - other(1,1);
+    this->data_[6] = data_[6] - other(1,2);
+    this->data_[7] = data_[7] - other(1,3);
 
-    result(1,0) = data_[4] - other(1,0);
-    result(1,1) = data_[5] - other(1,1);
-    result(1,2) = data_[6] - other(1,2);
-    result(1,3) = data_[7] - other(1,3);
+    this->data_[8] = data_[8] - other(2,0);
+    this->data_[9] = data_[9] - other(2,1);
+    this->data_[10] = data_[10] - other(2,2);
+    this->data_[11] = data_[11] - other(2,3);
 
-    result(2,0) = data_[8] - other(2,0);
-    result(2,1) = data_[9] - other(2,1);
-    result(2,2) = data_[10] - other(2,2);
-    result(2,3) = data_[11] - other(2,3);
-
-    result(3,0) = data_[12] - other(3,0);
-    result(3,1) = data_[13] - other(3,1);
-    result(3,2) = data_[14] - other(3,2);
-    result(3,3) = data_[15] - other(3,3);
+    this->data_[12] = data_[12] - other(3,0);
+    this->data_[13] = data_[13] - other(3,1);
+    this->data_[14] = data_[14] - other(3,2);
+    this->data_[15] = data_[15] - other(3,3);
 
     return *this;
 }
@@ -275,14 +268,12 @@ Matrix& Matrix::operator-=( Matrix const& other )
 ================
 */
 Matrix& Matrix::operator/=( float value )
-{
-    Matrix result;
-
+{   
     for (int row = 0; row < 4; ++row)
     {
         for (int col = 0; col < 4; ++col)
         {
-            result(row, col) = data_[4 * row + col] / value;
+            this->data_[4 * row + col] = data_[4 * row + col] / value;
         }
     }
 
@@ -428,6 +419,8 @@ Matrix Matrix::operator/( float value ) const
 /*
 ================
  Matrix::createIdentity
+
+ Creates identity matrix.
 ================
 */
 void Matrix::createIdentity()
@@ -456,6 +449,8 @@ void Matrix::createIdentity()
 /*
 ================
  Matrix::createRotationX
+
+ Creates rotation matrix given a rotation angle around X axis.
 ================
 */
 void Matrix::createRotationX( float rx )
@@ -484,6 +479,8 @@ void Matrix::createRotationX( float rx )
 /*
 ================
  Matrix::createRotationY
+
+ Creates rotation matrix given a rotation angle around Y axis.
 ================
 */
 void Matrix::createRotationY( float ry )
@@ -512,6 +509,8 @@ void Matrix::createRotationY( float ry )
 /*
 ================
  Matrix::createRotationZ
+
+ Creates rotation matrix given a rotation angle around Z axis.
 ================
 */
 void Matrix::createRotationZ( float rz )
@@ -540,6 +539,8 @@ void Matrix::createRotationZ( float rz )
 /*
 ================
  Matrix::CreateTranslation
+
+ Creates translation matrix.
 ================
 */
 void Matrix::CreateTranslattion( float x, float y, float z )
@@ -568,6 +569,8 @@ void Matrix::CreateTranslattion( float x, float y, float z )
 /*
 ================
  Matrix::CreateScale
+
+ Creates scale matrix.
 ================
 */
 void Matrix::CreateScale( float x, float y, float z )
@@ -596,6 +599,8 @@ void Matrix::CreateScale( float x, float y, float z )
 /*
 ================
  Matrix::CreatePerspective
+
+ Creates perspective matrix provided focal length.
 ================
 */
 void Matrix::CreatePerspective( float flength )

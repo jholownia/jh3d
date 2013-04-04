@@ -18,6 +18,15 @@
 namespace jh
 {
 
+/*
+================================
+
+ Triangle
+
+ A polygon of three points.
+
+================================
+*/
 class Triangle
 {
 public:

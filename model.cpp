@@ -26,6 +26,15 @@
 namespace jh
 {
 
+/*
+================================
+
+ Geometry
+
+ This struct encapsulates geometry to be drawn using OpenGL.
+
+================================
+*/
 struct Geometry
 {
     Geometry();
@@ -44,6 +53,11 @@ struct Geometry
     GLfloat faceColor[4];
 };
 
+/*
+================
+ qSetColor
+================
+*/
 static inline void qSetColor(float colorVec[], QColor c)
 {
     colorVec[0] = c.redF();
@@ -52,13 +66,22 @@ static inline void qSetColor(float colorVec[], QColor c)
     colorVec[3] = c.alphaF();
 }
 
+/*
+================
+ qMultMatrix
+================
+*/
 static inline void qMultMatrix(const QMatrix4x4 &mat)
 {
     if (sizeof(qreal) == sizeof(GLfloat))
+    {
         glMultMatrixf((GLfloat*)mat.constData());
+    }
 #ifndef QT_OPENGL_ES
     else if (sizeof(qreal) == sizeof(GLdouble))
+    {
         glMultMatrixd((GLdouble*)mat.constData());
+    }
 #endif
     else
     {
@@ -70,27 +93,49 @@ static inline void qMultMatrix(const QMatrix4x4 &mat)
     }
 }
 
+/*
+================
+ Geometry::Geometry
+================
+*/
 Geometry::Geometry()
 {
     qSetColor(faceColor, QColor(Qt::darkGray));
 }
 
+/*
+================
+ Geometry::loadArrays
+================
+*/
 void Geometry::loadArrays() const
 {
     glVertexPointer(3, GL_FLOAT, 0, vertices.constData());
     glNormalPointer(GL_FLOAT, 0, normals.constData());
 }
 
+/*
+================
+ Geometry::finalize
+
+ Normalizes calculated normals.
+================
+*/
 void Geometry::finalize()
 {
-    // TODO: add vertex buffer uploading here
-
     // Finish smoothing normals by ensuring accumulated normals are returned
     // to length 1.0.
     for (int i = 0; i < normals.count(); ++i)
         normals[i].normalize();
 }
 
+/*
+================
+ Geometry::appendSmooth
+
+ Appends a face and calculates averaged vertex normals.
+================
+*/
 void Geometry::appendSmooth(const QVector3D &a, const QVector3D &n, int from)
 {
     // Smooth normals are acheived by averaging the normals for faces meeting
@@ -119,6 +164,13 @@ void Geometry::appendSmooth(const QVector3D &a, const QVector3D &n, int from)
     faces.append(v);
 }
 
+/*
+================
+ Geometry::appendFaceted
+
+ Appends a face to geometry
+================
+*/
 void Geometry::appendFaceted(const QVector3D &a, const QVector3D &n)
 {
     // Faceted normals are achieved by duplicating the vert for every
@@ -129,16 +181,33 @@ void Geometry::appendFaceted(const QVector3D &a, const QVector3D &n)
     faces.append(v);
 }
 
+/*
+================
+ Geometry::rotate
+================
+*/
 void Geometry::rotate(qreal deg, QVector3D axis)
 {
     mat.rotate(deg, axis);
 }
 
+/*
+================
+ Geometry::translate
+================
+*/
 void Geometry::translate(const QVector3D &t)
 {
     mat.translate(t);
 }
 
+/*
+================
+ Geometry::draw
+
+ Draws the geometry using glDrawElements
+================
+*/
 void Geometry::draw() const
 {
     glPushMatrix();
@@ -150,6 +219,11 @@ void Geometry::draw() const
     glPopMatrix();
 }
 
+/*
+================
+ Model::Model
+================
+*/
 Model::Model() :
     vertexCount_  (0),
     indexCount_   (0),
@@ -161,13 +235,22 @@ Model::Model() :
 
 }
 
+/*
+================
+ Model::~Model
+================
+*/
 Model::~Model()
 {
     releaseBuffers();
     delete geometry_;
 }
 
-
+/*
+================
+ Model::init
+================
+*/
 bool Model::init(std::string filename)
 {
 
@@ -182,6 +265,14 @@ bool Model::init(std::string filename)
     return true;
 }
 
+/*
+================
+ Model::getMesh
+
+ Creates a mesh (Triangle collection) and returns a pointer to it.
+ The caller is responsible for deleting the mesh! (sloppy)
+================
+*/
 Triangle *Model::getMesh()
 {
     Triangle* mesh = new Triangle[indexCount_];
@@ -199,11 +290,23 @@ Triangle *Model::getMesh()
     return mesh;
 }
 
+/*
+================
+ Model::getIndexCount
+================
+*/
 int Model::getIndexCount() const
 {
     return indexCount_;
 }
 
+/*
+================
+ Model::Render
+
+ Draws model geometry using OpenGL.
+================
+*/
 void Model::Render() const
 {
     geometry_->loadArrays();
@@ -217,11 +320,23 @@ void Model::Render() const
     glDisableClientState(GL_NORMAL_ARRAY);
 }
 
+/*
+================
+ Model::setColor
+================
+*/
 void Model::setColor(QColor c)
 {
     qSetColor(geometry_->faceColor, c);
 }
 
+/*
+================
+ Model::loadModel
+
+ Loads the model from a file.
+================
+*/
 bool Model::loadModel(std::string filename)
 {
     std::ifstream ifs;
@@ -262,6 +377,16 @@ bool Model::loadModel(std::string filename)
     return true;
 }
 
+/*
+================
+ Model::createMesh
+
+ Creates model's mesh as Triangles array to be used for 2D rendering.
+
+ Note that this function and createGeometry do essentially the same
+ but use different data types, so one of them should ideally be removed.
+================
+*/
 void Model::createMesh()
 {
     mesh_ = new Triangle[indexCount_];
@@ -277,6 +402,13 @@ void Model::createMesh()
     }
 }
 
+/*
+================
+ Model::createGeometry
+
+ Creates model's geometry to be used for OpenGL rendering.
+================
+*/
 void Model::createGeometry()
 {
     if (geometry_ == NULL)
@@ -313,25 +445,40 @@ void Model::createGeometry()
     geometry_->finalize();
 }
 
+/*
+================
+ Model::setSmooth
+
+ Are we using smoothed normals.
+================
+*/
 void Model::setSmooth(bool smooth)
 {
     smooth_ = smooth;
     createGeometry();
 }
 
+/*
+================
+ Model::translate
+================
+*/
 void Model::translate(QVector3D t)
 {
     geometry_->translate(t);
 }
 
+/*
+================
+ Model::releaseBuffers
+================
+*/
 void Model::releaseBuffers()
 {
-    // delete[] mesh_;
+    delete[] mesh_;
     delete[] indexBuffer_;
     delete[] vertexBuffer_;
 }
-
-
 
 
 } // namespace jh

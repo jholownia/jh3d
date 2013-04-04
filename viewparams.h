@@ -12,6 +12,20 @@
 #ifndef VIEWPARAMS_H
 #define VIEWPARAMS_H
 
+
+/*
+================================
+
+ ViewParams
+
+ Represents a set view parameters for render area
+ which can be controlled through the UI.
+
+ This is a little bit lazy and should probably be
+ implemented with a set of signals and slots.
+
+================================
+*/
 struct ViewParams
 {
     float focalLength;

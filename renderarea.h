@@ -20,6 +20,17 @@
 #include "model.h"
 #include "viewparams.h"
 
+
+/*
+================================
+
+ RenderArea
+
+ A 2D render area which uses QPixmap, QPainter
+ and transformation matrices for drawing 3D shapes.
+
+================================
+*/
 class RenderArea : public QWidget
 {
     Q_OBJECT

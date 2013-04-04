@@ -88,6 +88,7 @@ public:
         data_[3] = data_[3] / data_[3];       
     }
 
+    // We need this method for Qt 2D drawing
     QPoint toQPoint() const
     {
         return QPoint(data_[0], data_[1]);

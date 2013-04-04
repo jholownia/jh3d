@@ -18,6 +18,15 @@
 namespace jh
 {
 
+/*
+================================
+
+ Quad
+
+ Represents a polygon of four points.
+
+================================
+*/
 class Quad
 {
 public:
@@ -26,8 +35,6 @@ public:
     void transform(Matrix const& matrix);
 
     Point getPoint(int i);
-
-    void draw(); // Maybe create drawable and inherit from it
 
 private:
     Point data_[4];

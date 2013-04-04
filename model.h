@@ -15,6 +15,8 @@
 #include <string>
 #include <QColor>
 #include <QVector3D>
+
+
 namespace jh
 {
 
@@ -25,6 +27,19 @@ struct Vertex;
 class Triangle;
 struct Geometry;
 
+/*
+================================
+
+ Model
+
+ This class represents a 3D model.
+
+ It currently holds some redundant data (mesh_ and geometry_) which is used
+ by 2D and OpenGL rendering respectively. This should be sorted by either using
+ the same underlying data types or splitting the class in two.
+
+================================
+*/
 class Model
 {
 public:
@@ -59,7 +74,6 @@ private:
 
     bool loadModel(std::string filename);
     void createMesh();
-
 
     void releaseBuffers();
 };

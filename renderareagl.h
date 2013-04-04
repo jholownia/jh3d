@@ -13,12 +13,20 @@
 #define RENDERAREAGL_H
 
 #include <QGLWidget>
+
 #include "model.h"
 #include "viewparams.h"
 #include "vertex.h"
 
+/*
+================================
 
+ RenderAreaGL
 
+ A render area using OpenGL for drawing 3D models.
+
+================================
+*/
 class RenderAreaGL : public QGLWidget
 {
     Q_OBJECT
