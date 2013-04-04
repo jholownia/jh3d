@@ -14,6 +14,11 @@
 namespace jh
 {
 
+/*
+================
+ Triangle::Triangle
+================
+*/
 Triangle::Triangle()
 {
     // bad
@@ -22,6 +27,11 @@ Triangle::Triangle()
     data_[2] = 0;
 }
 
+/*
+================
+ Triangle::Triangle
+================
+*/
 Triangle::Triangle(Point p1, Point p2, Point p3)
 {
     data_[0] = p1;
@@ -29,6 +39,11 @@ Triangle::Triangle(Point p1, Point p2, Point p3)
     data_[2] = p3;
 }
 
+/*
+================
+ Triangle::transform
+================
+*/
 void Triangle::transform(const Matrix &matrix)
 {
     for (int i = 0; i < 3; ++i)
@@ -38,16 +53,34 @@ void Triangle::transform(const Matrix &matrix)
     }
 }
 
+/*
+================
+ Triangle::getPoint
+================
+*/
 Point Triangle::getPoint(int i)
 {
     return data_[i];
 }
 
+/*
+================
+ Triangle::getAverageZ
+================
+*/
 float Triangle::getAverageZ()
 {
     return (data_[0].z() + data_[1].z() + data_[2].z()) / 3.0f;
 }
 
+/*
+================
+ Triangle::operator <
+
+ Implementing operator < allows us to use std::sort on
+ Triangles collection for polygon depth sorting.
+================
+*/
 bool Triangle::operator <(Triangle rhs)
 {
     return getAverageZ() < rhs.getAverageZ();

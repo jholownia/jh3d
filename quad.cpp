@@ -15,6 +15,11 @@
 namespace jh
 {
 
+/*
+================
+ Quad::Quad
+================
+*/
 Quad::Quad(Point p1, Point p2, Point p3, Point p4)
 {
     data_[0] = p1;
@@ -23,6 +28,11 @@ Quad::Quad(Point p1, Point p2, Point p3, Point p4)
     data_[3] = p4;
 }
 
+/*
+================
+ Quad::transform
+================
+*/
 void Quad::transform(const Matrix &matrix)
 {
     for (int i = 0; i < 4; ++i)
@@ -32,6 +42,11 @@ void Quad::transform(const Matrix &matrix)
     }
 }
 
+/*
+================
+ Quad::getPoint
+================
+*/
 Point Quad::getPoint(int i)
 {
     return data_[i];

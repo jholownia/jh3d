@@ -18,11 +18,12 @@
 
  ViewParams
 
- Represents a set view parameters for render area
+ Represents a set view parameters for RenderArea
  which can be controlled through the UI.
 
  This is a little bit lazy and should probably be
- implemented with a set of signals and slots.
+ implemented with a set of signals and slots like it's
+ done in RenderAreaGL.
 
 ================================
 */

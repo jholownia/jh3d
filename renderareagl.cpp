@@ -24,6 +24,12 @@
 #define GL_MULTISAMPLE  0x809D
 #endif
 
+
+/*
+================
+ RenderAreaGL::RenderAreaGL
+================
+*/
 RenderAreaGL::RenderAreaGL(QWidget *parent) :
     QGLWidget(QGLFormat(QGL::SampleBuffers), parent),
     model_(NULL),
@@ -39,21 +45,45 @@ RenderAreaGL::RenderAreaGL(QWidget *parent) :
     black_ = QColor::fromRgbF(0.0, 0.0, 0.0, 1.0);
 }
 
+/*
+================
+ RenderAreaGL::~RenderAreaGL
+================
+*/
 RenderAreaGL::~RenderAreaGL()
 {
 
 }
 
+/*
+================
+ RenderAreaGL::minimumSizeHint
+
+ Implements QWidget::minimumSizeHint for UI layout.
+================
+*/
 QSize RenderAreaGL::minimumSizeHint() const
 {
     return QSize(400, 400);
 }
 
+/*
+================
+ RenderAreaGL::sizeHint
+
+ See above.
+================
+*/
 QSize RenderAreaGL::sizeHint() const
 {
     return QSize(400, 400);
 }
 
+/*
+================
+ RenderAreaGL::qNormalizeAngle
+================
+*/
 static void qNormalizeAngle(int &angle)
 {
     while (angle < 0)
@@ -62,6 +92,11 @@ static void qNormalizeAngle(int &angle)
         angle -= 360 * 16;
 }
 
+/*
+================
+ RenderAreaGL::setXRotation
+================
+*/
 void RenderAreaGL::setXRotation(int angle)
 {
     qNormalizeAngle(angle);
@@ -73,6 +108,11 @@ void RenderAreaGL::setXRotation(int angle)
     }
 }
 
+/*
+================
+ RenderAreaGL::setYRotation
+================
+*/
 void RenderAreaGL::setYRotation(int angle)
 {
     qNormalizeAngle(angle);
@@ -83,7 +123,11 @@ void RenderAreaGL::setYRotation(int angle)
         updateGL();
     }
 }
-
+/*
+================
+ RenderAreaGL::setZRotation
+================
+*/
 void RenderAreaGL::setZRotation(int angle)
 {
     qNormalizeAngle(angle);
@@ -94,20 +138,34 @@ void RenderAreaGL::setZRotation(int angle)
         updateGL();
     }
 }
-
+/*
+================
+ RenderAreaGL::setModel
+================
+*/
 void RenderAreaGL::setModel(jh::Model *model)
 {
     model_ = model;
     model_->setColor(green_.dark());
     updateGL();
 }
-
+/*
+================
+ RenderAreaGL::updateView
+================
+*/
 void RenderAreaGL::updateView(const ViewParams &viewParams)
 {
     viewParams_ = viewParams;    
     updateGL();
 }
+/*
+================
+ RenderAreaGL::setSmooth
 
+ Whether or not we're using smoothed normals.
+================
+*/
 void RenderAreaGL::setSmooth(bool smooth)
 {
     if (model_ != NULL)
@@ -117,34 +175,56 @@ void RenderAreaGL::setSmooth(bool smooth)
         updateGL();
     }
 }
-
+/*
+================
+ RenderAreaGL::setLightPosX
+================
+*/
 void RenderAreaGL::setLightPosX(float x)
 {
      lightX_ = x;
      updateLight();
      updateGL();
 }
-
+/*
+================
+ RenderAreaGL::setLightPosY
+================
+*/
 void RenderAreaGL::setLightPosY(float y)
 {
     lightY_ = y;
     updateLight();
     updateGL();
 }
-
+/*
+================
+ RenderAreaGL::setLightPosZ
+================
+*/
 void RenderAreaGL::setLightPosZ(float z)
 {
      lightZ_ = z;
      updateLight();
      updateGL();
 }
-
+/*
+================
+ RenderAreaGL::setScale
+================
+*/
 void RenderAreaGL::setScale(float scale)
 {
     scale_ = scale;
     updateGL();
 }
+/*
+================
+ RenderAreaGL::initializeGL
 
+ Sets up OpenGL scene.
+================
+*/
 void RenderAreaGL::initializeGL()
 {
     qglClearColor(black_);
@@ -157,7 +237,13 @@ void RenderAreaGL::initializeGL()
     glEnable(GL_MULTISAMPLE);
     updateLight();
 }
+/*
+================
+ RenderAreaGL::paintGL
 
+ Renders the scene on the widget.
+================
+*/
 void RenderAreaGL::paintGL()
 {  
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -173,7 +259,13 @@ void RenderAreaGL::paintGL()
         model_->Render();
     }
 }
+/*
+================
+ RenderAreaGL::resizeGL
 
+ Resizes the viewport.
+================
+*/
 void RenderAreaGL::resizeGL(int width, int height)
 {
     int side = qMin(width, height);
@@ -188,12 +280,23 @@ void RenderAreaGL::resizeGL(int width, int height)
 #endif
     glMatrixMode(GL_MODELVIEW);
 }
-
+/*
+================
+ RenderAreaGL::mousePressEvent
+================
+*/
 void RenderAreaGL::mousePressEvent(QMouseEvent *event)
 {
     lastPos_ = event->pos();
 }
+/*
+================
+ RenderAreaGL::mouseMoveEvent
 
+ Handles mouse input so that moving the mouse
+ while the button is pressed changes the rotation of the object.
+================
+*/
 void RenderAreaGL::mouseMoveEvent(QMouseEvent* event)
 {
     qDebug() << "Mouse event";
@@ -213,7 +316,11 @@ void RenderAreaGL::mouseMoveEvent(QMouseEvent* event)
 
     lastPos_ = event->pos();
 }
-
+/*
+================
+ RenderAreaGL::updateLight
+================
+*/
 void RenderAreaGL::updateLight()
 {
     GLfloat lightPosition[4] = { lightX_, lightY_, lightZ_, 1.0 };
